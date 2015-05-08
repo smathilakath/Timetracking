@@ -73,13 +73,16 @@ In order to successfully run this sample app you need a few things:
 1. When you are trying to run the solution targetting Internet explorer there is a probability of facing the error seen in Figure 3.
 2. You can refer the following link http://blogs.msdn.com/b/webdev/archive/2013/06/28/browser-link-feature-in-visual-studio-preview-2013.aspx for solution.
 
+
 ## Running the code
 
 Once the sample app code is on your computer, you can do the following steps to run the app:
 
 1. Ctrl + Shift + B to build the solution</li>
 2. F5 to Run the solution</li>
+
 ## High Level Workflow
+
 <ol>
 
 <li>Connect to a QuickBooks Online company.
