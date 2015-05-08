@@ -89,11 +89,11 @@ Once the sample app code is on your computer, you can do the following steps to 
 <p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1a.png" alt="Connect to Quickbooks" height="250" width="250"/></p>
 </li>
 
-<li>Setupâ€”sync the following from the local database to the QuickBooks Online company.
+<li>Setup—sync the following from the local database to the QuickBooks Online company.
 <ul>
-  <li>employeesâ€”so time can be recorded against a specific service,</li>
-  <li>customersâ€”so time can be recorded as billable to a specific customer, </li>
-  <li>itemsâ€”the list of billable services.</li>
+  <li>employees—so time can be recorded against a specific service,</li>
+  <li>customers—so time can be recorded as billable to a specific customer, </li>
+  <li>items—the list of billable services.</li>
 </ul>
 <p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1b.png" alt="Sync Entities" height="168" width="250"></p>
 </li>
@@ -139,4 +139,14 @@ Your feed back is appreciated and it will motivate us to improve the app. Please
  V2 - Introduction of Angulars/Knock-out JS with MVC 5
  
  V3 - Introduction of Self Host WEB API with Angular/Knock-out JS and MVC 5
+ 
+ 
+## Contributing to the Repository ###
+
+If you find any issues or opportunities for improving this respository, fix them!  Feel free to contribute to this project by [forking](http://help.github.com/fork-a-repo/) this repository and make changes to the content.  Once you've made your changes, share them back with the community by sending a pull request. Please see [How to send pull requests](http://help.github.com/send-pull-requests/) for more information about contributing to Github projects. Please help in writing test cases to the Test Project.
+
+## Reporting Issues ###
+
+If you find any issues with this demo that you can't fix, feel free to report them in the [issues](https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/issues) section of this repository.
+
 
