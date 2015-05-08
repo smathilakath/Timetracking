@@ -96,11 +96,11 @@ Once the sample app code is on your computer, you can do the following steps to 
 </li>
 
 <li>Create and push approved time activity objects to QuickBooks Online company for payroll and billing purposes.
-	<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/blob/Timetracking-V1/images/Time.JPG" alt="Sync Entities" height="243" width="250"></p>
+	<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/blob/timetracking-v1/images/Time.JPG" alt="Sync Entities" height="243" width="250"></p>
 </li>
 
 <li>Create and push invoice objects to QuickBooks Online company for billing purposes.
-<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/blob/Timetracking-V1/images/Invoice.JPG" alt="Sync Entities" height="84" width="500"></p>
+<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/blob/timetracking-v1/images/Invoice.JPG" alt="Sync Entities" height="84" width="500"></p>
 </li>
 </ol>
 
