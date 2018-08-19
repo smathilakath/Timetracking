@@ -31,7 +31,7 @@ Time Tracking and Invoicing DotNet Sample App
 
 In order to successfully run this sample app you need a few things:
 
-1. ![Visual Studio 2013] (images/studio.jpg "Visual Studio Version")
+1. ![Alt text](images/studio.jpg "Visual Studio Version")
 2. A [developer.intuit.com](http://developer.intuit.com) account
 3. An app on [developer.intuit.com](http://developer.intuit.com) and the associated app token, consumer key, and consumer secret.
 4. QuickBooks .NET SDK (already included in the project folder) 
@@ -51,17 +51,17 @@ In order to successfully run this sample app you need a few things:
 3. Execute sql script "InsertScript.sql" under Root\Script folder.
 4. Refer Figure 4 to make sure you have connected to mdf file before executing the scripts.
 
-####Figure 1:
+# Figure 1:
 ![Alt text](images/Sync.png "Configurations")
 
-####Figure 2:
+# Figure 2:
 ![Alt text](images/mdf.JPG "MDF File")
 
-####Figure 3:
+# Figure 3:
 ![Alt text](images/browserLink.JPG "BrowserLink File")
 
 
-####Figure 4:
+# Figure 4:
 ![Alt text](images/ConnectToDB.JPG "Connect to DB")
 
 ## Configuration
@@ -89,11 +89,11 @@ Once the sample app code is on your computer, you can do the following steps to 
 <p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1a.png" alt="Connect to Quickbooks" height="250" width="250"/></p>
 </li>
 
-<li>Setup—sync the following from the local database to the QuickBooks Online company.
+<li>Setupâ€”sync the following from the local database to the QuickBooks Online company.
 <ul>
-  <li>employees—so time can be recorded against a specific service,</li>
-  <li>customers—so time can be recorded as billable to a specific customer, </li>
-  <li>items—the list of billable services.</li>
+  <li>employeesâ€”so time can be recorded against a specific service,</li>
+  <li>customersâ€”so time can be recorded as billable to a specific customer, </li>
+  <li>itemsâ€”the list of billable services.</li>
 </ul>
 <p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1b.png" alt="Sync Entities" height="168" width="250"></p>
 </li>
@@ -148,5 +148,3 @@ If you find any issues or opportunities for improving this respository, fix them
 ## Reporting Issues ###
 
 If you find any issues with this demo that you can't fix, feel free to report them in the [issues](https://github.com/smathilakath/Timetracking/issues) section of this repository.
-
-
