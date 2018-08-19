@@ -1,0 +1,223 @@
+﻿@model TimeTracking.Models.Multiplemodels
+@{
+
+    ViewBag.Title = "TimeActivity";
+    string empSelect = string.Empty;
+    string custSelect = string.Empty;
+    string itemSelect = string.Empty;
+    string strdescription = string.Empty;
+    long id = Model.TimeActivityModel.Id;
+}
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+<script type="text/javascript">
+    var controlId = "";
+    $(document).ready(function () {
+        
+        
+        var emp = $("#TimeActivityModel_Employee option:selected").val();
+        var cust = $("#TimeActivityModel_Customer option:selected").val();
+        var item = $("#TimeActivityModel_Item option:selected").val();
+        controlId = @id;
+        var alertMessage = "";
+        $("#showAlert").hide();
+        $(function () {
+            $("[name='TimeActivityModel.Item']").change(function () {
+
+                item = $(this).val();
+
+                $("#selectedServiceItem").text($(this).val() + "/ Hour");
+            });
+        });
+        $(function () {
+            $("[name='TimeActivityModel.Employee']").change(function () {
+
+                emp = $(this).val();
+
+            });
+        });
+        $(function () {
+            $("[name='TimeActivityModel.Customer']").change(function () {
+
+                cust = $(this).val();
+
+            });
+        });
+        $("#btnClear").click(function () {
+
+            alert("Clear");
+            $("#description").val("")
+        });
+        $("#btnSave").click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("Save", "TimeActivity")',
+                type: 'POST',
+                data: { id: controlId, empSelect: emp, cusSelect: cust, itemSelect:item, description: $("#description").val() },
+                success: function(data){
+                    
+                    LoadResult(data);
+                }
+            });
+        });
+
+        $("#showAlert").click(function (e) {
+            $("#showAlert").hide();
+            e.stopPropagation();
+        });
+        function LoadResult(data)
+        {
+            
+            var result = data;
+            controlId = result.ControlId;
+            timeIdentifierScript = controlId;
+            alertMessage = result.AlertMessage;
+            var employee = result.Employee;
+            var Customer = result.Customer;
+            var Item = result.Item;
+            var date = result.Date;
+            var Hours = result.Hours;
+            var QboId = result.QboId;
+            var row = "";
+            row+="<tr>"
+            row+="<td>"+employee+ "</td>"
+            row+="<td>"+Customer+ "</td>"
+            row+="<td>"+Item+ "</td>"
+            row+="<td>"+date+ "</td>"
+            row+="<td>"+Hours+ "</td>"
+            row+="<td>"+7890+ "</td>"
+            row+="<td>"+QboId+ "</td>"
+            row+="</tr>";
+            $("#timeActivity").append(row);
+            $("#alertText").text(alertMessage);
+            $("#showAlert").show();
+
+        }
+
+    });
+</script>
+
+
+<div ng-class="row">
+    <div class="alert alert-success alert-dismissible" id="showAlert">
+        <span id="alertText"></span>
+            <span aria-hidden="true">&times;</span><span class="sr-only" id="spnClose" style="float:right">Close</span>
+    </div>
+
+</div>
+<div ng-class="row">
+    <h3>Step 2: Enter Time</h3>
+    <h4><em>Complete all fields to save</em></h4>
+</div>
+<div ng-class="row">
+    <form novalidate role="form" class="form-horizontal" name="form" id="form" method="post">
+        <div class="form-group" ng-class="{'has-error': form.employee.$invalid}">
+
+            <label class="col-xs-2 control-label">Employee</label>
+
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TimeActivityModel.Employee, Model.TimeActivityModel.Employee, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error': form.customer.$invalid}">
+            <label class="col-xs-2 control-label">Customer</label>
+
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TimeActivityModel.Customer, Model.TimeActivityModel.Customer, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': form.serviceItem.$invalid}">
+            <label class="col-xs-2 control-label">Service Item</label>
+
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TimeActivityModel.Item, Model.TimeActivityModel.Item, new { @class = "form-control" })
+            </div>
+        </div>
+        @*<div class="form-group">
+            <label class="col-xs-2 control-label">Rate</label>
+
+            <div class="col-xs-3">
+                <span class="form-control-static" id="selectedServiceItem">
+                    / Hour
+                </span>
+            </div>
+        </div>*@
+        
+        <div class="form-group" ng-class="{'has-error': form.description.$invalid}">
+            <label class="col-xs-2 control-label">Description</label>
+
+            <div class="col-xs-3">
+                <textarea class="form-control" id="description"
+                           rows="3" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-2 col-xs-offset-1">
+                <input id="btnClear" type="button" value="Clear" class="btn btn-default" />
+            </div>
+            <div class="col-xs-1 col-xs-offset-0">
+              
+                <input id="btnSave" type="button" value="Save" class="btn btn-success"/>
+            </div>
+        </div>
+    </form>
+</div>
+<div ng-class="row">
+    <h3>Time Activities</h3>
+</div>
+<div ng-class="row">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Customer</th>
+                <th>Service Item</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Amount</th>
+                <th>QBO ID</th>
+            </tr>
+        </thead>
+        @*<tbody>
+
+            @if (Model.TimeActivityModel.EmployeeSelected != null)
+            {
+                var selectedEmp = Model.TimeActivityModel.EmployeeSelected;
+                var employee = Model.TimeActivityModel.EmployeeList.Where(x=>x.Id==selectedEmp).First();
+
+                var selectedCust = Model.TimeActivityModel.CustomerSelected;
+                var Customer = Model.TimeActivityModel.CustomerList.Where(x => x.Id == selectedCust).First();
+
+                var selectedItem = Model.TimeActivityModel.ItemSelected;
+                var item = Model.TimeActivityModel.ItemList.Where(x => x.Id == selectedItem).First();
+                <tr>
+                   <td>@employee.GivenName @employee.FamilyName</td>
+                    <td>@Customer.GivenName @Customer.FamilyName</td>
+                    <td>@item.Name</td>
+                    <td>@Model.TimeActivityModel.TxnDate</td>
+                    <td>@Model.TimeActivityModel.Hours</td>
+                    <td>@Model.TimeActivityModel.QboId</td>
+                </tr>
+
+            }
+            
+        </tbody>*@
+        <tbody id="timeActivity">
+           @foreach (var item in Model.TimeActivityModel.FillTime)
+           {
+            <tr>
+                <td>@item.Employee</td>
+                <td>@item.Customer</td>
+                <td>@item.Item</td>
+                <td>@item.Date</td>
+                <td>@item.Hours</td>
+                
+                <td>12345</td>
+                <td>@item.QboId</td>
+            </tr>
+           }
+
+        </tbody>
+    </table>
+</div>

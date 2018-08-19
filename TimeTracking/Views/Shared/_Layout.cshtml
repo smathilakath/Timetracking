@@ -1,0 +1,126 @@
+﻿@model TimeTracking.Models.Multiplemodels
+@{
+
+    long syncIdentifier;
+    if (Model.SyncObjectsModel.Id!=null)
+    {
+         syncIdentifier = Model.SyncObjectsModel.Id;
+    }
+    else
+    {
+        syncIdentifier = 0;
+    }
+    long timeIdentifier;
+    if (Model.TimeActivityModel.Id >0)
+    {
+        timeIdentifier = Model.TimeActivityModel.Id;
+    }
+    else
+    {
+        timeIdentifier = 0;
+    }
+    string invoicestring = string.Empty;
+    string linkState = string.Empty;
+    string timelinkState = string.Empty;
+    string invoicelinkState = string.Empty;
+    string syncState = string.Empty;
+    if (Model.IsConnected)
+    {
+         linkState = "not-active";
+         if (!Model.IsReadySync)
+         {
+             syncState = linkState;
+         }
+         else
+         {
+             syncState = "active";
+         }
+         if (!Model.IsReadyTimeentry)
+         {
+             timelinkState = linkState;
+         }
+         else
+         {
+             timelinkState = "active";
+         }
+         if (!Model.IsReadytoInvoice)
+         {
+             invoicelinkState = linkState;
+         }
+         else
+         {
+             invoicelinkState = "active";
+         }
+    }
+    else
+    {
+        linkState = "not-active";
+        syncState = linkState;
+        invoicelinkState = linkState;
+        timelinkState = linkState;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Time Tracking Sample APP For Dummies</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    <script language="javascript">
+        var timeIdentifierScript = "";
+
+        $(document).ready(function () {
+        
+            
+            $("#aInvoice").click(function (e) {
+                e.preventDefault();
+                
+                if (timeIdentifierScript>0) {
+                    window.location.href = "/Invoice/Load/" + timeIdentifierScript;
+                }
+                else {
+                    timeIdentifierScript = @timeIdentifier;
+                    window.location.href = "/Invoice/Load/" + timeIdentifierScript;
+                }
+            }
+            );
+        });
+    </script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Time Tracking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Settings", "Index", "Home", new { @class = syncState })</li>
+                    <li>@Html.ActionLink("Time Entry", "Load", "TimeActivity", new { id = syncIdentifier }, new { @class = timelinkState })</li>
+                    <li><a href="#" id="aInvoice" class="@invoicelinkState">Invoices</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Time Tracking Sample App for Dummies</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

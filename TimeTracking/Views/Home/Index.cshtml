@@ -1,0 +1,276 @@
+﻿@model TimeTracking.Models.Multiplemodels
+@{
+
+    ViewBag.Title = "Settings";
+    bool isConnected = Model.OAuthorizationModel.IsConnected;
+    string OauthGrant = Request.Url.GetLeftPart(UriPartial.Authority) + "/" + "Oauth";
+    var syncIdentifier = Model.SyncObjectsModel.Id;
+
+}
+
+<script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+@Styles.Render("~/Content/app.css")
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@if (!isConnected)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            intuit.ipp.anywhere.setup({
+                grantUrl: '@OauthGrant',
+                datasources: {
+                    quickbooks: true,
+                    payments: false
+                }
+            });
+
+
+        });
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#viewEmp").click(function () {
+
+                OpenInQbo(getMultipleEntitiesUrl("employees"));
+            });
+            $("#viewCust").click(function () {
+                OpenInQbo(getMultipleEntitiesUrl("customers"));
+            });
+            $("#viewItem").click(function () {
+                OpenInQbo(getMultipleEntitiesUrl("items"));
+            });
+        });
+        function OpenInQbo(url) {
+            window.open(url, "popupWindow", "width=600,height=600,scrollbars=yes");
+        }
+        var getQboDeepLinkURLRoot = function () {
+            return "https://" + "@Model.SyncObjectsModel.DeepLink" + "/login?";
+        };
+
+        var getMultipleEntitiesUrl = function (entityType) {
+            return getQboDeepLinkURLRoot() + "deeplinkcompanyid=" + @Model.SyncObjectsModel.CompanyId + "&pagereq=" + entityType;
+        };
+
+        var getSingleEntityUrl = function (entityType, entityId) {
+            return getQboDeepLinkURLRoot() + "pagereq=" + entityType + "?txnId=" + entityId + "&deeplinkcompanyid=" + ModelSvc.model.company.qboId;
+        };
+    </script>
+
+}
+
+<div ng-class="row">
+    <h2>Step 1: Set up your app</h2>
+</div>
+<div ng-class="row" class="voffset4">
+
+    <h4>
+        a. Connect To QuickBooks Online</h3>
+        @if (!isConnected)
+        {
+            <div id="connect-to-qbo-div">
+                <p>Your app is not connected to QuickBooks Online.</p>
+                <ipp:connecttointuit></ipp:connecttointuit>
+            </div>
+        }
+        else
+        {
+            <div id="disconnect-from-qbo-div">
+                <p>Your app is connected to QuickBooks Online.</p>
+            </div>
+        }
+</div>
+<div ng-class="row" class="voffset4">
+    <h4>
+        b. Sync your app data with QuickBooks Online</h3>
+
+        <p>
+            The following entities will be synced to QuickBooks Online. Once you have synced the entities, you can
+            click the "View in QB" link to view the entity in QB
+        </p>
+</div>
+<div ng-class="row">
+    <table class="table table-striped table-bordered table-nonfluid">
+        <thead>
+            <tr>
+                <th>Entity Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Employees</td>
+                <td>
+                    @if (Model.SyncObjectsModel != null && isConnected)
+                    {
+                        if (Model.SyncObjectsModel.IsEmployeeSync)
+                        {
+                            <span class="glyphicon glyphicon-transfer">Synced</span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Sync", "Employee", "Sync", new { id = syncIdentifier }, new { @class = "glyphicon glyphicon-transfer" })
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Customers</td>
+                <td>
+                    @if (Model.SyncObjectsModel != null && isConnected)
+                    {
+                        if (Model.SyncObjectsModel.IsCustomerSync)
+                        {
+                            <span class="glyphicon glyphicon-transfer">Synced</span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Sync", "Customer", "Sync", new { id = syncIdentifier }, new { @class = "glyphicon glyphicon-transfer" })
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Service Items</td>
+                <td>
+                    @if (Model.SyncObjectsModel != null && isConnected)
+                    {
+                        if (Model.SyncObjectsModel.IsServiceItemSync)
+                        {
+                            <span class="glyphicon glyphicon-transfer">Synced</span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Sync", "ServiceItem", "Sync", new { id = syncIdentifier }, new { @class = "glyphicon glyphicon-transfer" })
+                        }
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-class="row">
+    <hr>
+</div>
+<div ng-class="row" style="margin-top: 25px">
+    <h4>Employees, Customers, Service Items</h4>
+
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-sm-4">
+                <h4>Employees</h4>
+            </div>
+            <div class="col-sm-2 col-sm-push-2">
+                <button type="button" class="btn btn-default btn-xs" style="margin-top: 10px"
+                        id="viewEmp">
+                    <span class="glyphicon glyphicon-eye-open"></span> View in QuickBooks
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>QBO ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.SyncObjectsModel.EmployeeList !=null)
+                {
+                    foreach (var item in Model.SyncObjectsModel.EmployeeList)
+                    {
+                        <tr>
+                            <td>@item.GivenName</td>
+                            <td>@item.FamilyName</td>
+                            <td>@item.Id</td>
+                        </tr>
+                    }
+
+                }
+
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-sm-4">
+                <h4>Customers</h4>
+            </div>
+            <div class="col-sm-2 col-sm-push-2">
+                <button type="button" class="btn btn-default btn-xs" style="margin-top: 10px"
+                        id="viewCust">
+                    <span class="glyphicon glyphicon-eye-open"></span> View in QuickBooks
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>QBO ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.SyncObjectsModel.CustomerList != null)
+                {
+                    foreach (var item in Model.SyncObjectsModel.CustomerList)
+                    {
+                        <tr>
+                            <td>@item.GivenName</td>
+                            <td>@item.FamilyName</td>
+                            <td>@item.Id</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-sm-5">
+                <h4>Service Items</h4>
+            </div>
+            <div class="col-sm-2 col-sm-push-1">
+                <button type="button" class="btn btn-default btn-xs" style="margin-top: 10px"
+                        id="viewItem">
+                    <span class="glyphicon glyphicon-eye-open"></span> View in QuickBooks
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Rate</th>
+                    <th>QBO ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.SyncObjectsModel.ItemList != null)
+                {
+                    foreach (var item in Model.SyncObjectsModel.ItemList)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.UnitPrice</td>
+                            <td>@item.Id</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+    </div>
+</div>
