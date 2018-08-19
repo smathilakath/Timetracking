@@ -86,7 +86,7 @@ Once the sample app code is on your computer, you can do the following steps to 
 <ol>
 
 <li>Connect to a QuickBooks Online company.
-<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1a.png" alt="Connect to Quickbooks" height="250" width="250"/></p>
+<p align="center"><img src="images/timetrackingstep1a.png" alt="Connect to Quickbooks" height="250" width="250"/></p>
 </li>
 
 <li>Setup—sync the following from the local database to the QuickBooks Online company.
@@ -95,7 +95,7 @@ Once the sample app code is on your computer, you can do the following steps to 
   <li>customers—so time can be recorded as billable to a specific customer, </li>
   <li>items—the list of billable services.</li>
 </ul>
-<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-Java/wiki/images/timetrackingstep1b.png" alt="Sync Entities" height="168" width="250"></p>
+<p align="center"><img src="images/timetrackingstep1b.png" alt="Sync Entities" height="168" width="250"></p>
 </li>
 
 <li>Create and push approved time activity objects to QuickBooks Online company for payroll and billing purposes.
@@ -103,7 +103,7 @@ Once the sample app code is on your computer, you can do the following steps to 
 </li>
 
 <li>Create and push invoice objects to QuickBooks Online company for billing purposes.
-<p align="center"><img src="https://github.com/IntuitDeveloper/SampleApp-TimeTracking_Invoicing-DotNet/blob/timetracking-v1/images/Invoice.JPG" alt="Sync Entities" height="84" width="500"></p>
+<p align="center"><img src="images/Invoice.JPG" alt="Sync Entities" height="84" width="500"></p>
 </li>
 </ol>
 
